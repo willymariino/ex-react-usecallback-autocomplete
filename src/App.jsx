@@ -20,11 +20,11 @@ Obiettivo: Mostrare suggerimenti dinamici in base alla ricerca dell'utente.
 import axios from "axios"
 import { useState, useEffect } from "react"
 
-async function getProducts(query, setProduct) {
+async function getProducts(query, setProducts) {
 
   try {
     const res = await axios.get(`http://localhost:3333/products?search=${query}`)
-    setProduct(res.data)
+    setProducts(res.data)
     console.log(res.data)
 
   }
@@ -44,17 +44,35 @@ async function getProducts(query, setProduct) {
 function App() {
 
   const [query, setQuery] = useState("")
-  const [product, setProduct] = useState([])
+  const [products, setProducts] = useState([])
 
   useEffect(() => {
-    getProducts(query, setProduct)
+    getProducts(query, setProducts)
   }, [query])
 
   return (
     <>
+      <h1>Cerca i prodotti</h1>
 
+      <input type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Digita il nome del prodotto"
+      />
 
+      <ul>
 
+        {products.map(product => (
+
+          <li key={product.id}>
+            <p>{product.name} </p>
+            <p>brand: {product.brand} - price:  {product.price}</p>
+            ----------
+          </li>
+
+        ))}
+
+      </ul>
     </>
   )
 }

@@ -10,3 +10,7 @@
 .product-list {
     list-style-type: none;
 }
+
+.product-card:hover .separator {
+    visibility: hidden;
+}

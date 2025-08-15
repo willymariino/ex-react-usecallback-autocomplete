@@ -84,7 +84,7 @@ function App() {
           <li key={product.id} className="product-card">
             <p>{product.name} </p>
             <p>brand: {product.brand} - price:  {product.price}</p>
-            ----------
+            <span className="separator">  ---------- </span>
           </li>
 
         ))}

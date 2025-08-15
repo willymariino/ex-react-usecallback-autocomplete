@@ -26,11 +26,10 @@ async function getProducts(query, setProducts) {
     const res = await axios.get(`http://localhost:3333/products?search=${query}`)
     setProducts(res.data)
     console.log(res.data)
-
   }
 
   catch {
-    console.error("errore nel caricamento dei prodotti")
+    console.error("errore nel caricamento dei prodotti!! 🙀🙀🙀")
   }
 
   finally {
@@ -73,6 +72,7 @@ function App() {
         ))}
 
       </ul>
+
     </>
   )
 }

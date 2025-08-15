@@ -18,7 +18,19 @@ Obiettivo: Mostrare suggerimenti dinamici in base alla ricerca dell'utente.
 
 */
 import axios from "axios"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
+
+function debounce(callback, delay) {
+  let timer;
+  return (value) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      callback(value)
+    }, delay)
+  }
+}
+
+
 
 async function getProducts(query, setProducts) {
 
@@ -45,9 +57,15 @@ function App() {
   const [query, setQuery] = useState("")
   const [products, setProducts] = useState([])
 
+  // creo la versione debouncizzata di getProducts
+  const debouncedGetProducts = useCallback(
+    debounce((queryValue) => getProducts(queryValue, setProducts), 1000),
+    [setProducts]) // qui anche un array vuoto [] andrebbe bene come dipendenza
+
+
   useEffect(() => {
-    getProducts(query, setProducts)
-  }, [query])
+    debouncedGetProducts(query, setProducts)
+  }, [query, debouncedGetProducts])
 
   return (
     <>

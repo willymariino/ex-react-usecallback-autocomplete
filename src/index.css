@@ -14,3 +14,25 @@
 .product-card:hover .separator {
     visibility: hidden;
 }
+
+.search-bar{
+    padding: 0.5%;
+    border-radius: 35px;
+}
+
+.suggestion:hover{
+    background-color: #cccccc;
+    border-radius: 35px;
+    max-width: 25%;
+
+}
+
+.suggestion{
+    padding: 0.5%;
+}
+
+.suggestion-box{
+   background-color: #f0f0f0;
+   padding: 0.5%;
+   border-radius: 35px;
+}

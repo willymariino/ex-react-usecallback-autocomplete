@@ -32,11 +32,12 @@ function debounce(callback, delay) {
 
 
 
-async function getProducts(query, setProducts) {
+async function getProducts(query, setProducts, setSuggestions) {
 
   try {
     const res = await axios.get(`http://localhost:3333/products?search=${query}`)
     setProducts(res.data)
+    setSuggestions(res.data)
     console.log(res.data)
   }
 
@@ -56,26 +57,41 @@ function App() {
 
   const [query, setQuery] = useState("")
   const [products, setProducts] = useState([])
+  const [suggestions, setSuggestions] = useState([])
 
   // creo la versione debouncizzata di getProducts
   const debouncedGetProducts = useCallback(
-    debounce((queryValue) => getProducts(queryValue, setProducts), 1000),
-    [setProducts]) // qui anche un array vuoto [] andrebbe bene come dipendenza
+    debounce((queryValue) => getProducts(queryValue, setProducts, setSuggestions), 500),
+    [setProducts, setSuggestions]) // qui anche un array vuoto [] andrebbe bene come dipendenza
 
 
   useEffect(() => {
-    debouncedGetProducts(query, setProducts)
-  }, [query, debouncedGetProducts])
+    debouncedGetProducts(query)
+  }, [query, debouncedGetProducts,])
 
   return (
     <>
       <h1>Cerca i prodotti</h1>
 
-      <input type="text"
+      <input type="text" className="search-bar"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Digita il nome del prodotto"
       />
+
+      {query.length > 0 && suggestions.length > 0 && (
+        <div className="suggestion-box">
+          <p>suggerimenti di ricerca:</p>
+          {suggestions.map((product) => (
+            <p key={product.id} className="suggestion">
+
+              {product.name}
+            </p>
+          ))
+
+          }
+        </div>
+      )}
 
       <ul className="product-list">
 

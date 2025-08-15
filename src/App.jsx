@@ -77,11 +77,11 @@ function App() {
         placeholder="Digita il nome del prodotto"
       />
 
-      <ul>
+      <ul className="product-list">
 
         {products.map(product => (
 
-          <li key={product.id}>
+          <li key={product.id} className="product-card">
             <p>{product.name} </p>
             <p>brand: {product.brand} - price:  {product.price}</p>
             ----------

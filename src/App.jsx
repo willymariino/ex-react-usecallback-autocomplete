@@ -58,7 +58,6 @@ function App() {
   const [query, setQuery] = useState("")
   const [products, setProducts] = useState([])
   const [suggestions, setSuggestions] = useState([])
-  const [isSelectingSuggestion, setIsSelectingSuggestion] = useState(false)
 
   // creo la versione debouncizzata di getProducts
   const debouncedGetProducts = useCallback(
@@ -67,20 +66,13 @@ function App() {
 
 
   useEffect(() => {
-    if (!isSelectingSuggestion) {
-      debouncedGetProducts(query, setSuggestions)
-    }
-
-    else {
-      setIsSelectingSuggestion(false)
-    }
-
+    debouncedGetProducts(query, setSuggestions)
   }, [query, debouncedGetProducts,])
 
   const handleSuggestionClick = (product) => {
     setQuery(product.name) // autocompleta il campo al click
     setSuggestions([]) // svuota il box dei suggerimenti
-    setIsSelectingSuggestion(true)
+    getProducts(product.name, setProducts, setSuggestions)
   }
 
   return (

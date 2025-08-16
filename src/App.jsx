@@ -58,6 +58,7 @@ function App() {
   const [query, setQuery] = useState("")
   const [products, setProducts] = useState([])
   const [suggestions, setSuggestions] = useState([])
+  const [isSelectingSuggestion, setIsSelectingSuggestion] = useState(false)
 
   // creo la versione debouncizzata di getProducts
   const debouncedGetProducts = useCallback(
@@ -66,8 +67,21 @@ function App() {
 
 
   useEffect(() => {
-    debouncedGetProducts(query)
+    if (!isSelectingSuggestion) {
+      debouncedGetProducts(query, setSuggestions)
+    }
+
+    else {
+      setIsSelectingSuggestion(false)
+    }
+
   }, [query, debouncedGetProducts,])
+
+  const handleSuggestionClick = (product) => {
+    setQuery(product.name) // autocompleta il campo al click
+    setSuggestions([]) // svuota il box dei suggerimenti
+    setIsSelectingSuggestion(true)
+  }
 
   return (
     <>
@@ -83,7 +97,9 @@ function App() {
         <div className="suggestion-box">
           <p>suggerimenti di ricerca:</p>
           {suggestions.map((product) => (
-            <p key={product.id} className="suggestion">
+            <p key={product.id} className="suggestion"
+              onClick={() => handleSuggestionClick(product)}
+            >
 
               {product.name}
             </p>

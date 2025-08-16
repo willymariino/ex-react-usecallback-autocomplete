@@ -13,8 +13,15 @@ Mostra i risultati API sotto l'input in una tendina di suggerimenti.
 
 Se l'utente cancella il testo, la tendina scompare.
 
-
 Obiettivo: Mostrare suggerimenti dinamici in base alla ricerca dell'utente.
+
+📌 Milestone 2: Implementare il Debounce per Ottimizzare la Ricerca
+
+Attualmente, ogni pressione di tasto esegue una richiesta API. Questo è inefficiente!
+Implementa una funzione di debounce per ritardare la chiamata API fino a quando l’utente smette di digitare per un breve periodo (es. 300ms)
+Dopo l’implementazione, verifica che la ricerca non venga eseguita immediatamente a ogni tasto premuto, ma solo dopo una breve pausa.
+
+Obiettivo: Ridurre il numero di richieste API e migliorare le prestazioni.
 
 */
 import axios from "axios"
@@ -72,7 +79,7 @@ function App() {
   const handleSuggestionClick = (product) => {
     setQuery(product.name) // autocompleta il campo al click
     setSuggestions([]) // svuota il box dei suggerimenti
-    getProducts(product.name, setProducts, setSuggestions)
+    getProducts(product.name, setProducts)
   }
 
   return (

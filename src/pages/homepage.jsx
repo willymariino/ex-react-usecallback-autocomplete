@@ -1,5 +1,7 @@
 import axios from "axios"
 import { useState, useEffect, useCallback } from "react"
+import ProductDetail from "./product-detail";
+import { Link } from "react-router-dom";
 
 // Funzione debounce: limita la frequenza con cui viene chiamata una funzione.
 // Riceve una funzione di callback e un delay in ms.
@@ -101,13 +103,22 @@ function Homepage() {
 
             {/* Lista dei prodotti trovati */}
             <ul className="product-list">
-                {products.map(product => (
+
+                {products.map((product, id) => (
+
                     <li key={product.id} className="product-card">
-                        <p>{product.name} </p>
-                        <p>brand: {product.brand} - price:  {product.price}</p>
-                        <span className="separator">  ---------- </span>
+
+                        <Link to={`/product-detail/${id}`}>
+
+                            <p>{product.name} </p>
+                            <p>brand: {product.brand} - price:  {product.price}</p>
+                            <span className="separator">  ---------- </span>
+
+                        </Link>
+
                     </li>
                 ))}
+
             </ul>
         </>
     )

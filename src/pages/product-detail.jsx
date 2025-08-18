@@ -31,6 +31,16 @@ function ProductDetail() {
 
     return (
         <>
+            <h1>Dettaglio prodotti</h1>
+
+            <div className="card-container">
+
+                <div className="image-container">
+                    <img src={`http://localhost:3333/products/${products.image}`} alt="" />
+                </div>
+
+
+            </div>
 
         </>
     )

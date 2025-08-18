@@ -1,6 +1,5 @@
 import axios from "axios"
 import { useState, useEffect, useCallback } from "react"
-import ProductDetail from "./product-detail";
 import { Link } from "react-router-dom";
 
 // Funzione debounce: limita la frequenza con cui viene chiamata una funzione.
@@ -28,10 +27,10 @@ async function getProducts(query, setProducts, setSuggestions) {
         setSuggestions(res.data)   // imposta il nuovo stato di suggestions
         console.log(res.data)      // logga i dati ricevuti
     }
-    catch {
-        // Gestione degli errori in caso di problemi con la richiesta
-        (error) => console.error("errore nel caricamento dei prodotti!! 🙀🙀🙀", error)
+    catch (error) {
+        { console.error("errore nel caricamento dei dettagli del prodotto!! 🙀🙀🙀🙀", error) }
     }
+
     finally {
         // Messaggio di completamento operazione (sia successo che errore)
         console.log("operazione completata")
@@ -104,11 +103,11 @@ function Homepage() {
             {/* Lista dei prodotti trovati */}
             <ul className="product-list">
 
-                {products.map((product, id) => (
+                {products.map((product) => (
 
                     <li key={product.id} className="product-card">
 
-                        <Link to={`/product-detail/${id}`}>
+                        <Link to={`/product-detail/${product.id}`}>
 
                             <p>{product.name} </p>
                             <p>brand: {product.brand} - price:  {product.price}</p>

@@ -2,15 +2,16 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import axios from "axios"
 
-async function getProductDetail(id, setProducts) {
+async function getProductDetail(id, setProduct, setLoading) {
 
     try {
         const res = await axios.get(`http://localhost:3333/products/${id}`)
-        setProducts(res.data)
+        setProduct(res.data)
+        setLoading(false)
     }
 
-    catch {
-        (error) => console.error("errore nel caricamento dei dettagli del prodotto!! 🙀🙀🙀🙀", error)
+    catch (error) {
+        { console.error("errore nel caricamento dei dettagli del prodotto!! 🙀🙀🙀🙀", error) }
     }
 
     finally {
@@ -20,14 +21,20 @@ async function getProductDetail(id, setProducts) {
 
 function ProductDetail() {
 
-    const [products, setProducts] = useState(null)
+    const [product, setProduct] = useState(null)
+    const [loading, setLoading] = useState(true)
     const { id } = useParams()
 
 
-
     useEffect(() => {
-        getProductDetail(id, setProducts)
+        getProductDetail(id, setProduct, setLoading)
     }, [id])
+
+    if (loading) {
+        return (
+            <div>caricamento in corso...</div>
+        )
+    }
 
     return (
         <>
@@ -36,7 +43,7 @@ function ProductDetail() {
             <div className="card-container">
 
                 <div className="image-container">
-                    <img src={`http://localhost:3333/products/${products.image}`} alt="" />
+                    <img src={`http://localhost:3333/products/${product.image}`} alt="product-image" />
                 </div>
 
 

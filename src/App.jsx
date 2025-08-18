@@ -26,7 +26,7 @@ Obiettivo: Ridurre il numero di richieste API e migliorare le prestazioni.
 */
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from "./pages/homepage";
-import Product_detail from "./pages/product-detail";
+import ProductDetail from "./pages/product-detail";
 
 function App() {
 
@@ -38,7 +38,7 @@ function App() {
         <Routes>
           <Route path="" index Component={Homepage} />
           <Route path="/homepage" Component={Homepage} />
-          <Route path="/homepage/product-detail/:id" Component={Product_detail} />
+          <Route path="/product-detail/:id" Component={ProductDetail} />
         </Routes>
 
       </BrowserRouter>

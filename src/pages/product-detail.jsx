@@ -8,6 +8,7 @@ async function getProductDetail(id, setProduct, setLoading) {
         const res = await axios.get(`http://localhost:3333/products/${id}`)
         setProduct(res.data)
         setLoading(false)
+        console.log(res.data)
     }
 
     catch (error) {
@@ -38,7 +39,7 @@ function ProductDetail() {
 
     return (
         <>
-            <h1>Dettaglio prodotti</h1>
+            <h1>Dettaglio prodotto</h1>
 
             <div className="card-container">
 
@@ -46,6 +47,18 @@ function ProductDetail() {
                     <img src={`http://localhost:3333/products/${product.image}`} alt="product-image" />
                 </div>
 
+                <div className="text-box">
+
+                    <p>name: {product.name}</p>
+                    <p>brand: {product.brand}</p>
+                    <p>connectivity: {product.connectivity}</p>
+                    <p>price: {product.price}</p>
+                    <p>rating: {product.rating}</p>
+                    <p>wireless: {product.wireless}</p>
+                    description:
+                    <p> {product.description}</p>
+
+                </div>
 
             </div>
 

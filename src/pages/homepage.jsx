@@ -68,7 +68,7 @@ function Homepage() {
     const handleSuggestionClick = (product) => {
         setQuery(product.name) // autocompleta il campo al click
         setSuggestions([])     // svuota il box dei suggerimenti
-        getProducts(product.name, setProducts)
+        getProducts(product.name, setProducts) // aggiorna la lista dei prodotti in base al suggerimento selezionato
     }
 
     return (

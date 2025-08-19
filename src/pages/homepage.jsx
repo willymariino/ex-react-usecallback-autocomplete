@@ -84,7 +84,12 @@ function Homepage() {
                 placeholder="Digita il nome del prodotto"
             />
 
-            {/* Mostra la tendina dei suggerimenti solo se c'è testo e suggerimenti disponibili */}
+            {/* Mostra la tendina dei suggerimenti solo se c'è testo e suggerimenti disponibili 
+            in pratica con questo map sto facendo la stessa cosa che faccio con l'altro map che usa lo stato products, reindirizzo in pagina i nomi dei 
+            prodotti per mostrarli come suggerimenti, infatti qui mi serve il conditional rendering per fare in modo che a differenza della lista dei prodotti, 
+            non vengano sempre mostrati tutti di default, ma solo qua quando c'è del testo nella casella di ricerca, (infatti query.length deve essere maggiore di 0)
+            infatti nonostante essendo gli stessi dati, uso uno stato nuovo (suggestions) per fare in modo che il conditional rendering, non si applichi anche allo 
+            stato products che regola invece la lista di prodotti daa mostrare in pagina.*/}
             {query.length > 0 && suggestions.length > 0 && (
                 <div className="suggestion-box">
                     <p>suggerimenti di ricerca:</p>

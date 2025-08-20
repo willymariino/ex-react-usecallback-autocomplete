@@ -58,8 +58,36 @@ function Homepage() {
     // Effetto che si attiva ogni volta che la query cambia.
     // Chiama la funzione debouncizzata per ottenere i prodotti.
     useEffect(() => {
-        debouncedGetProducts(query, setSuggestions)
+        debouncedGetProducts(query)
     }, [query, debouncedGetProducts])
+
+    /*
+    📌 NOTA SU  debouncedGetProducts(query) 
+    potresti anche scrivere:
+    useEffect(() => {
+        debouncedGetProducts(query, setProducts, setSuggestions)
+    }, [query, debouncedGetProducts])
+    sarebbe comunque corretto, perchè la funzione getProducts può accettare 3 argomenti,
+   Ma è ridondante: solo query è lo stato che cambia ogni volta che scrivi nell’input
+
+React non ricrea mai nuove versioni delle funzioni setState (setProducts, setSuggestions, setLoading, ecc.),
+quindi non c’è nessun beneficio ad inserirle come dipendenze.
+
+ Regola pratica:
+Metti nelle dipendenze solo i valori che cambiano e che, cambiando, devono far rieseguire l’effetto.
+Le funzioni setState di React (setProduct, setLoading, ecc.) non cambiano mai, quindi puoi tranquillamente lasciarle fuori.
+
+L’unico motivo per aggiungerle sarebbe se in futuro volessi gestire suggestions in modo diverso da products
+(ad esempio mantenere due stati separati con logiche distinte).
+
+Quando ha senso separare davvero?
+
+Se mostri i prodotti in un modo (lista completa, ordinata, con dettagli).
+E i suggerimenti in un altro (brevi, limitati, magari solo il nome).
+In quel caso diventa utile passare entrambi i setState come argomenti e gestirli diversamente dentro getProducts.
+
+*/
+
 
     // Gestisce il click su un suggerimento:
     // - aggiorna la query con il nome del prodotto selezionato

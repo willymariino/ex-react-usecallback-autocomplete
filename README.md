@@ -68,8 +68,16 @@ function debounce(callback, delay) {
 }
 ```
 
-➡️ Serve per **ritardare** l’esecuzione di una funzione.
-👉 in questo caso: evita chiamate API continue mentre l’utente digita.
+debounce è una high Order function (ritorna una nuova funzione).
+
+La funzione ritornata ricorda la variabile **timer** grazie a una closure → ogni volta che viene richiamata cancella il timer precedente e ne imposta uno nuovo.
+
+Risultato: la callback parte solo quando l’utente smette di scrivere per almeno delay ms.
+
+👉 È un “buffer” che ritarda l’azione finché non passa un certo tempo dall’ultimo input.
+quindi Serve per **ritardare** l’esecuzione di una funzione.  
+
+in questo caso: evita chiamate API continue mentre l’utente digita.
 
 ---
 

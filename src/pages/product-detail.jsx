@@ -28,7 +28,7 @@ function ProductDetail() {
 
 
     useEffect(() => {
-        getProductDetail(id) // aggiungere anche , setProduct, setLoading sarebbe ridondante dato che è l'unico che cambia
+        getProductDetail(id) // aggiungere anche , setProduct, setLoading sarebbe ridondante dato che è l'unico che cambiano mai perchè non cambiano mai perchè sono garantite stabili da React.
     }, [id])
 
     if (loading) {

@@ -48,8 +48,160 @@ This project is a demo of a smart product search field, similar to Amazon's, bui
 
 ## Tech Stack
 
-- **React**: Frontend library for building user interfaces.
-- **React Router**: For client-side routing.
-- **Axios**: For making HTTP requests to the backend API.
+- **React 19.1.1**
+- **React Router 7.8.1**: For client-side routing.
+- **Axios 19.1.1**: For making HTTP requests to the backend API.
 
+## struttura progetto:
+
+### 📘 React Autocomplete — Scheda Ripasso
+
+### 1. **Debounce**
+
+```js
+function debounce(callback, delay) {
+  let timer;
+  return (value) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => callback(value), delay);
+  };
+}
+```
+
+➡️ Serve per **ritardare** l’esecuzione di una funzione.
+👉 in questo caso: evita chiamate API continue mentre l’utente digita.
+
+---
+
+### 2. **Stati principali**
+
+* `query`: testo digitato dall’utente
+* `products`: lista di prodotti da mostrare in pagina
+* `suggestions`: lista di prodotti suggeriti (autocomplete)
+
+---
+
+### 3. **Flusso**
+
+1. Utente scrive → `setQuery` aggiorna lo stato.
+2. `useEffect` ascolta `query` → chiama `debouncedGetProducts(query)`.
+3. Dopo 500ms → `getProducts(query)` fa chiamata API.
+4. Aggiorno sia `products` che `suggestions`.
+5. JSX mostra:
+
+   * `products` sempre sotto
+   * `suggestions` solo se `query.length > 0 && suggestions.length > 0`.
+
+---
+
+### 4. **Click su un suggerimento**
+
+```js
+const handleSuggestionClick = (product) => {
+  setQuery(product.name);   // autocompleta input
+  setSuggestions([]);       // nasconde tendina
+  getProducts(product.name, setProducts); // aggiorna lista principale
+};
+```
+
+---
+
+### 5. **Conditional rendering**
+
+```jsx
+{query.length > 0 && suggestions.length > 0 && (
+  <div className="suggestion-box">...</div>
+)}
+```
+
+➡️ Mostra la tendina **solo se** c’è testo e ci sono suggerimenti.
+
+---
+
+## Flowchart — Autocomplete con debounce
+
+```
+[Utente digita in input]
+          |
+          v
+   aggiorna query
+          |
+          v
+   useEffect scatta
+   (dipende da query)
+          |
+          v
+ debouncedGetProducts(query)
+   (ritardo 500ms)
+          |
+          v
+ getProducts(query):
+   - chiama API
+   - aggiorna products
+   - aggiorna suggestions
+          |
+          v
+[SUGGERIMENTI visibili?]
+  query.length > 0
+  suggestions.length > 0
+          |
+     +----+----+
+     |         |
+   SI           NO
+   |             |
+ Mostra box      Non mostra nulla
+ con lista
+          |
+          v
+[Click su suggerimento]
+   - setQuery(product.name)
+   - setSuggestions([])
+   - getProducts(product.name, setProducts)
+          |
+          v
+  Aggiorna lista principale
+```
+
+---
+
+## 🔍 Focus su **useEffect**
+
+```js
+useEffect(() => {
+  debouncedGetProducts(query, setSuggestions)
+}, [query, debouncedGetProducts])
+```
+
+* `query` → ogni volta che cambia la stringa digitata, devo rifare la ricerca.
+* `debouncedGetProducts` → è la funzione “memorizzata” da `useCallback`.
+  👉 Se non la metto tra le dipendenze, React potrebbe usare una versione “vecchia” della funzione.
+
+📌 Quindi: effetto parte quando cambia **cosa cerco (query)** o **il modo in cui cerco (debouncedGetProducts)**.
+
+---
+
+## 🔍 Focus su  **handleSuggestionClick**
+
+```js
+const handleSuggestionClick = (product) => {
+  setQuery(product.name);            // scrive il nome nel box ricerca
+  setSuggestions([]);                // svuota la tendina suggerimenti
+  getProducts(product.name, setProducts); // ricarica i prodotti principali
+};
+```
+
+1. **Perché passo `product.name` a getProducts?**
+
+   * L’utente ha scelto un prodotto specifico.
+   * Quindi non serve più tutta la query → basta il nome del prodotto (stringa).
+
+2. **Perché passo `setProducts` e non `setSuggestions`?**
+
+   * Ora non devo più mostrare suggerimenti, ma solo la lista principale dei prodotti corrispondenti.
+   * I suggerimenti li ho già svuotati con `setSuggestions([])`.
+
+3. **Perché non uso `debouncedGetProducts`?**
+
+   * Qui non voglio ritardo → l’utente ha fatto click, quindi la ricerca dev’essere immediata.
+   * `debouncedGetProducts` serve solo quando scrivi, non quando confermi la scelta.
 

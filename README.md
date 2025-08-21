@@ -212,4 +212,3 @@ const handleSuggestionClick = (product) => {
 
    * Qui non voglio ritardo → l’utente ha fatto click, quindi la ricerca dev’essere immediata.
    * `debouncedGetProducts` serve solo quando scrivi, non quando confermi la scelta.
-

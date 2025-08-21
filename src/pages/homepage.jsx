@@ -55,6 +55,13 @@ function Homepage() {
         [setProducts, setSuggestions]
     )
 
+    /*
+ (queryValue) => getProducts(queryValue, setProducts, setSuggestions) è una closure, perchè ricorda le variabili 
+ setproducts e setSuggestions dallo scope di function app, che è la funzione madre.
+    */
+
+
+
     // Effetto che si attiva ogni volta che la query cambia.
     // Chiama la funzione debouncizzata per ottenere i prodotti.
     useEffect(() => {

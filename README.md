@@ -205,7 +205,7 @@ const handleSuggestionClick = (product) => {
 
 2. **Perché passo `setProducts` e non `setSuggestions`?**
 
-   * Ora non devo più mostrare suggerimenti, ma solo la lista principale dei prodotti corrispondenti.
+   * Ora non devo più mostrare suggerimenti, ma solo aggiornare la lista principale dei prodotti corrispondenti.
    * I suggerimenti li ho già svuotati con `setSuggestions([])`.
 
 3. **Perché non uso `debouncedGetProducts`?**

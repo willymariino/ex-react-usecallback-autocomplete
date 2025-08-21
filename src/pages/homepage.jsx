@@ -47,7 +47,7 @@ function Homepage() {
     const [suggestions, setSuggestions] = useState([])
 
     // Creo la versione debouncizzata di getProducts.
-    // useCallback serve per memorizzare la funzione e non ricrearla ad ogni render.
+    // useCallback serve per memorizzare la funzione e non ricrearla ad ogni render, senza non funzionerebbe.
     // debounce ritarda la chiamata a getProducts di 500ms dopo l'ultimo input.
     // praticamente debouncedGetProducts e un wrapper di getProducts prima di mandarla a useEffect.
     const debouncedGetProducts = useCallback(

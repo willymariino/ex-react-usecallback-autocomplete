@@ -176,7 +176,7 @@ const handleSuggestionClick = (product) => {
 
 ```js
 useEffect(() => {
-  debouncedGetProducts(query, setSuggestions)
+  debouncedGetProducts(query)
 }, [query, debouncedGetProducts])
 ```
 

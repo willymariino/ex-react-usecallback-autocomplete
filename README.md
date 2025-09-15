@@ -2,8 +2,6 @@
 
 This project is a demo of a smart product search field, similar to Amazon's, built with React. The application displays dynamic suggestions as the user types and optimizes API calls using a debounce function.
 
-**Note:** Only the frontend code is available on GitHub. The backend is not included or published.
-
 ## Features
 
 - **Search Field**: Users can search for products by typing their names.
@@ -31,9 +29,9 @@ This project is a demo of a smart product search field, similar to Amazon's, bui
    npm install
    ```
 
-3. **Backend not available**
-   - The backend API (`http://localhost:3333/products` and `/products/:id`) is **not** included or published.
-   - The search and product detail features will **not work** unless you provide a compatible backend yourself.
+3. **Backend available at this repository**
+
+-  [dati-esercizi-specializzazione](https://github.com/willymariino/dati-esercizi-specializzazione)
 
 4. **Start the React application**
    ```bash

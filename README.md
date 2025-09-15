@@ -33,6 +33,7 @@ This project is a demo of a smart product search field, similar to Amazon's, bui
 
 -  [dati-esercizi-specializzazione](https://github.com/willymariino/dati-esercizi-specializzazione)
 
+
 4. **Start the React application**
    ```bash
    npm run dev

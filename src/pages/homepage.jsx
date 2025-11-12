@@ -10,10 +10,33 @@ function debounce(callback, delay) {
     return (value) => {
         clearTimeout(timer) // cancella il timer precedente se esiste
         timer = setTimeout(() => {
-            callback(value) // chiama la funzione dopo il delay
+            callback(value) // esecuzione della callback 
         }, delay)
     }
 }
+
+/*
+Una callback è semplicemente una funzione che viene passata come argomento a un’altra funzione, 
+con l’aspettativa che quella funzione la esegua in un momento successivo. 
+
+timer = setTimeout(() => {
+  callback(value)
+}, delay)
+
+Qui la funzione anonima () => { callback(value) } è passata come argomento a setTimeout.
+setTimeout non la esegue subito: la memorizza e la farà partire dopo un delay in millisecondi.
+In questo senso, quella arrow function è una callback asincrona.
+
+Quando chiami debounce, passi una funzione concreta come callback. Ad esempio:
+
+const debouncedGetProducts = useCallback(
+        debounce((queryValue) => getProducts(queryValue, setProducts, setSuggestions), 500),
+        [setProducts, setSuggestions]
+    )
+
+*/
+
+
 
 // Funzione asincrona che effettua la chiamata API per ottenere i prodotti.
 // query: stringa di ricerca
@@ -57,7 +80,22 @@ function Homepage() {
 
     /*
  (queryValue) => getProducts(queryValue, setProducts, setSuggestions) è una closure, perchè ricorda le variabili 
- setproducts e setSuggestions dallo scope di function app, che è la funzione madre.
+ setproducts e setSuggestions dallo scope di function homepage, che è la funzione madre.
+
+ Callback passata a debounce → (queryValue) => { ... }
+ Corpo della callback → invocazione di getProducts(...)
+ getProducts(...) → una normale funzione di utilità che fa il lavoro vero (fetch + aggiornamento stati).
+
+ function debounce(callback, delay) {
+  let timer;
+  return (value) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      callback(value); // <-- qui viene eseguita la callback che ho passato a debounce
+    }, delay);
+  }
+}
+
     */
 
 
